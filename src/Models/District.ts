@@ -1,24 +1,25 @@
-import { Model, model, Schema } from "mongoose";
-import { ExtendedDocument } from "../Database/Plugins/ExtendedSchema";
+import { Model, model, Schema, Types, Document } from "mongoose";
 
-interface District {
-  district_id: number;
+interface District extends Document {
+  _id: Types.ObjectId;
+  district_id: string;
   name: string;
   gso_id: string;
-  province_id: number;
+  province_id: Types.ObjectId;
   created_at: string;
   updated_at: string;
 }
 
-// Methods Interface
-interface DistrictDocument extends District, ExtendedDocument {}
-
 // Statics Interface
-interface DistrictModel extends Model<DistrictDocument> {}
+interface DistrictModel extends Model<District> {}
 
-const DistrictSchema: Schema<DistrictDocument> = new Schema({
+const DistrictSchema: Schema<District> = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    unique: true,
+  },
   district_id: {
-    type: Number,
+    type: String,
     unique: true,
   },
   name: {
@@ -29,7 +30,7 @@ const DistrictSchema: Schema<DistrictDocument> = new Schema({
     type: String,
   },
   province_id: {
-    type: Number,
+    type: Schema.Types.ObjectId,
   },
   created_at: {
     type: String,
@@ -39,9 +40,6 @@ const DistrictSchema: Schema<DistrictDocument> = new Schema({
   },
 });
 
-const District = model<DistrictDocument, DistrictModel>(
-  "district",
-  DistrictSchema
-);
+const District = model<District, DistrictModel>("district", DistrictSchema);
 
 export { District, DistrictModel };

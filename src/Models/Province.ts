@@ -1,23 +1,20 @@
-import { Model, model, Schema } from "mongoose";
-import { ExtendedDocument } from "../Database/Plugins/ExtendedSchema";
+import { Model, model, Schema, Types, Document } from "mongoose";
 
-interface Province {
-  province_id: number;
+interface Province extends Document {
+  _id: Types.ObjectId;
+  province_id: string;
   name: string;
   gso_id: string;
   created_at: string;
   updated_at: string;
 }
 
-// Methods Interface
-interface ProvinceDocument extends Province, ExtendedDocument {}
-
 // Statics Interface
-interface ProvinceModel extends Model<ProvinceDocument> {}
+interface ProvinceModel extends Model<Province> {}
 
-const ProvinceSchema: Schema<ProvinceDocument> = new Schema({
+const ProvinceSchema: Schema<Province> = new Schema({
   province_id: {
-    type: Number,
+    type: String,
     unique: true,
   },
   name: {
@@ -35,9 +32,6 @@ const ProvinceSchema: Schema<ProvinceDocument> = new Schema({
   },
 });
 
-const Province = model<ProvinceDocument, ProvinceModel>(
-  "province",
-  ProvinceSchema
-);
+const Province = model<Province, ProvinceModel>("province", ProvinceSchema);
 
 export { Province, ProvinceModel };

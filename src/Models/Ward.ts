@@ -1,24 +1,25 @@
-import { Model, model, Schema } from "mongoose";
-import { ExtendedDocument } from "../Database/Plugins/ExtendedSchema";
+import { Model, model, Schema, Types, Document } from "mongoose";
 
-interface Ward {
-  ward_id: number;
+interface Ward extends Document {
+  _id: Types.ObjectId;
+  ward_id: string;
   name: string;
   gso_id: string;
-  district_id: number;
+  district_id: Types.ObjectId;
   created_at: string;
   updated_at: string;
 }
 
-// Methods Interface
-interface WardDocument extends Ward, ExtendedDocument {}
-
 // Statics Interface
-interface WardModel extends Model<WardDocument> {}
+interface WardModel extends Model<Ward> {}
 
-const WardSchema: Schema<WardDocument> = new Schema({
+const WardSchema: Schema<Ward> = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    unique: true,
+  },
   ward_id: {
-    type: Number,
+    type: String,
     unique: true,
   },
   name: {
@@ -29,7 +30,7 @@ const WardSchema: Schema<WardDocument> = new Schema({
     type: String,
   },
   district_id: {
-    type: Number,
+    type: Schema.Types.ObjectId,
   },
   created_at: {
     type: String,
@@ -39,6 +40,6 @@ const WardSchema: Schema<WardDocument> = new Schema({
   },
 });
 
-const Ward = model<WardDocument, WardModel>("ward", WardSchema);
+const Ward = model<Ward, WardModel>("ward", WardSchema);
 
 export { Ward, WardModel };

@@ -5,7 +5,7 @@ import FileStorage from "./FileStorage";
 import { User, UserRoles } from "../Models/User";
 
 const appDomain = process.env.DOMAIN || "domain.com";
-const dbUrl = process.env.DATABASE || "mongodb://localhost:27017/nodejs-ts";
+const dbUrl = process.env.DATABASE || "mongodb://localhost:27017/geo-location-vietnam";
 
 const DEFAULT_ADMIN = {
   username: "admin",
